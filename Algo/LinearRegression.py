@@ -20,7 +20,7 @@ class LinearRegression(object):
             X = self.__add_intercept(X)
             
         # weight initialization
-        self.weight = np.zeros(X.shape[1])
+        self.weight = np.random.random(X.shape[1])
         
         for i in range(self.num_iter):
             h = np.dot(X, self.weight)
@@ -31,13 +31,10 @@ class LinearRegression(object):
                 h = np.dot(X, self.weight)
                 print(f'loss: {self.__loss(h, y)} \t')
     
-    def predict_prob(self, X):
+    def predict(self, X):
         if self.fit_intercept:
             X = self.__add_intercept(X)
-        return self.__sigmoid(np.dot(X, self.weight))
-    
-    def predict(self, X, threshold=0.5):
-        return self.predict_prob(X) >= threshold
+        return np.dot(X, self.weight)
 
  if __name__ == '__main__':
     model = LinearRegression(lr=0.1, num_iter=300000)
