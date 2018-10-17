@@ -30,24 +30,24 @@ class LogisticRegression(object):
         if self.fit_intercept:
             X = self.__add_intercept(X)
             
-        # weight/theta initialization
-        self.theta = np.zeros(X.shape[1])
+        # weight initialization
+        self.weight = np.zeros(X.shape[1])
         
         for i in range(self.num_iter):
-            z = np.dot(X, self.theta)
+            z = np.dot(X, self.weight)
             h = self.__sigmoid(z)
             gradient = np.dot(X.T, (h - y)) / y.size
             self.theta -= self.lr * gradient
             
             if(self.verbose == True and i % 10000 == 0):
-                z = np.dot(X, self.theta)
+                z = np.dot(X, self.weight)
                 h = self.__sigmoid(z)
                 print(f'loss: {self.__loss(h, y)} \t')
     
     def predict_prob(self, X):
         if self.fit_intercept:
             X = self.__add_intercept(X)
-        return self.__sigmoid(np.dot(X, self.theta))
+        return self.__sigmoid(np.dot(X, self.weight))
     
     def predict(self, X, threshold=0.5):
         return self.predict_prob(X) >= threshold
@@ -55,5 +55,4 @@ class LogisticRegression(object):
  if __name__ == '__main__':
     model = LogisticRegression(lr=0.1, num_iter=300000)
     pred_y = model.predict(X)
-    # accuracy
-    print (np.mean(pred_y == y))
+    print(np.mean(pred_y == y)) # accuracy
