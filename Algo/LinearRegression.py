@@ -5,7 +5,7 @@ class LinearRegression(object):
     def __init__(self, lr=0.01, num_iter=100000, fit_intercept=True, verbose=False):
         self.lr = lr
         self.num_iter = num_iter
-        self.fit_intercept = fit_intercept
+        self.fit_intercept = fit_intercept #bias term
     
     def __add_intercept(self, X):
         intercept = np.ones((X.shape[0], 1))
@@ -13,7 +13,7 @@ class LinearRegression(object):
     
     def __loss(self, h, y):
         """ MSE loss """
-        return np.mean(np.power(y-h, 2))
+        return np.mean(np.square(y-h))
     
     def fit(self, X, y):
         if self.fit_intercept:
